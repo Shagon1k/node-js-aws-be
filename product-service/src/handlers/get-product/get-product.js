@@ -1,10 +1,11 @@
 import productsContent from '@data/guitars-list.json';
 import { ERROR_MESSAGES } from '@handlers/constants';
 
-import { prepareErrorResponse, convertPrice } from '../helpers';
+import { prepareErrorResponse, convertPrice, getAccessOriginHeader } from '../helpers';
 
 async function getProduct(event) {
   try {
+    const requestOrigin = event?.headers?.origin || '';
     const { productId } = event.pathParameters;
     const productData = productsContent.find(el => el.id === productId);
 
@@ -20,7 +21,7 @@ async function getProduct(event) {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Headers' : 'Content-Type',
-        'Access-Control-Allow-Origin': 'https://d2zvo2vdnqfgz1.cloudfront.net', // TODO: Add multi-origin support (check how to get event origin)
+        'Access-Control-Allow-Origin': getAccessOriginHeader(requestOrigin),
         'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
       },
       body: JSON.stringify({

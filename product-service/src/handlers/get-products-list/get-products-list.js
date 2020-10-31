@@ -1,19 +1,20 @@
 import productsContent from '@data/guitars-list.json';
-import { prepareErrorResponse } from '../helpers';
+import { prepareErrorResponse, getAccessOriginHeader } from '../helpers';
 
-async function getProductsList() {
+async function getProductsList(event) {
   try {
+    const requestOrigin = event?.headers?.origin || '';
     const response = {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Headers' : 'Content-Type',
-        'Access-Control-Allow-Origin': '*', // TODO: Add multi-origin support (check how to get event origin)
+        'Access-Control-Allow-Origin': getAccessOriginHeader(requestOrigin),
         'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
       },
       body: JSON.stringify({
         message: 'Products List',
         data: productsContent,
-      })
+      }),
     };
 
     return response;
