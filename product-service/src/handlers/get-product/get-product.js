@@ -1,5 +1,6 @@
 import productsContent from '@data/guitars-list.json';
 import { ERROR_MESSAGES } from '@handlers/constants';
+
 import { prepareErrorResponse, convertPrice } from '../helpers';
 
 async function getProduct(event) {
@@ -17,12 +18,18 @@ async function getProduct(event) {
 
     const response = {
       statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Headers' : 'Content-Type',
+        'Access-Control-Allow-Origin': 'https://d2zvo2vdnqfgz1.cloudfront.net',
+        'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
+      },
       body: JSON.stringify({
         message: 'Product Info',
         data: {
           ...productData,
           priceGBP
         },
+        event,
       })
     };
 

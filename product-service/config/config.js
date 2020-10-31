@@ -1,7 +1,13 @@
 export const CURRENCY_API = {
-  API_URL: 'https://api.exchangeratesapi.io/',
+  API_URL: "https://api.exchangeratesapi.io/",
   ROUTES: {
-    latest: 'latest',
-    history: 'history'
-  }
+    latest: "latest",
+    history: "history",
+  },
 };
+
+export const ALLOWED_REQUEST_ORIGINS = [
+  "http://localhost:3000",
+  "https://d2zvo2vdnqfgz1.cloudfront.net",
+  "http://d2zvo2vdnqfgz1.cloudfront.net",
+];
