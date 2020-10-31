@@ -20,7 +20,7 @@ async function getProduct(event) {
       statusCode: 200,
       headers: {
         'Access-Control-Allow-Headers' : 'Content-Type',
-        'Access-Control-Allow-Origin': 'https://d2zvo2vdnqfgz1.cloudfront.net',
+        'Access-Control-Allow-Origin': 'https://d2zvo2vdnqfgz1.cloudfront.net', // TODO: Add multi-origin support (check how to get event origin)
         'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
       },
       body: JSON.stringify({
@@ -28,8 +28,7 @@ async function getProduct(event) {
         data: {
           ...productData,
           priceGBP
-        },
-        event,
+        }
       })
     };
 
