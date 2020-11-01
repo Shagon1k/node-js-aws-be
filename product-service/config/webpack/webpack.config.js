@@ -3,7 +3,7 @@ const path = require('path');
 
 const environmentConstants = require('./environments');
 
-const { DIST_DIR, SRC_DIR, CONFIG_DIR, DATA_DIR } = environmentConstants;
+const { DIST_DIR, SRC_DIR, CONFIG_DIR } = environmentConstants;
 
 module.exports = {
   entry: slsw.lib.entries,  // all serverless yaml file functions

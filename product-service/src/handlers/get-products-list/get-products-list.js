@@ -1,6 +1,8 @@
 import productsContent from '@data/guitars-list.json';
 import { prepareErrorResponse, getAccessOriginHeader } from '../helpers';
 
+export const responseMsg = 'Products List';
+
 async function getProductsList(event) {
   try {
     const requestOrigin = event?.headers?.origin || '';
@@ -12,7 +14,7 @@ async function getProductsList(event) {
         'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
       },
       body: JSON.stringify({
-        message: 'Products List',
+        message: responseMsg,
         data: productsContent,
       }),
     };

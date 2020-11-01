@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "AHurynovich AWS Course Product Service",
   "scripts": {
-    "deploy": "serverless deploy"
+    "deploy": "serverless deploy",
+    "test": "jest --config config/jest/jest.config.js --notify"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",

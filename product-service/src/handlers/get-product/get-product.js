@@ -3,6 +3,8 @@ import { ERROR_MESSAGES } from '@handlers/constants';
 
 import { prepareErrorResponse, convertPrice, getAccessOriginHeader } from '../helpers';
 
+export const responseMsg = 'Product Info';
+
 async function getProduct(event) {
   try {
     const requestOrigin = event?.headers?.origin || '';
@@ -25,7 +27,7 @@ async function getProduct(event) {
         'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
       },
       body: JSON.stringify({
-        message: 'Product Info',
+        message: responseMsg,
         data: {
           ...productData,
           priceGBP
