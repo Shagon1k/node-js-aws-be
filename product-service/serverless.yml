@@ -23,16 +23,20 @@ custom:
 
 functions:
   getProductsList:
-    handler: src/handlers/index.getProductsList
+    handler: handler.getProductsList
     events:
       - http:
           method: get
           path: products
           cors: true
   getProduct:
-    handler: src/handlers/index.getProduct
+    handler: handler.getProduct
     events:
       - http:
           method: get
           path: product/{productId}
           cors: true
+          request:
+            parameters:
+              paths:
+                productId: true
