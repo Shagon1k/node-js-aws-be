@@ -1,0 +1,115 @@
+---
+openapi: 3.0.0
+info:
+  title: AHurynovich AWS Product Service API
+  description: Documentation of AHurynovich AWS Product Service API (awesome guitars)
+  contact:
+    email: shagon1k@gmail.com
+  version: 1.0.0-oas3
+servers:
+- url: https://j25gzwc0cl.execute-api.eu-west-1.amazonaws.com/prod
+- url: http://j25gzwc0cl.execute-api.eu-west-1.amazonaws.com/prod
+tags:
+- name: productServiceProd
+  description: Product Service production version
+- name: productServiceDev
+  description: Product Service development version
+paths:
+  /products:
+    get:
+      tags:
+      - productServiceProd
+      - productServiceDev
+      description: |
+        Get available products (guitars) list
+      responses:
+        "200":
+          description: Available awesome guitars list response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+        "500":
+          description: Server error
+  /product{productId}:
+    get:
+      tags:
+      - productServiceProd
+      - productServiceDev
+      description: |
+        Get product (guitar) info by id
+      parameters:
+      - name: productId
+        in: path
+        description: Searched Guitar's ID
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Found guitar info
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/Product'
+        "500":
+          description: Server error
+components:
+  schemas:
+    Product:
+      required:
+      - count
+      - description
+      - id
+      - imageUrl
+      - price
+      - title
+      type: object
+      properties:
+        id:
+          type: string
+          example: guitar-42
+        title:
+          type: string
+          example: Hohner HC 03
+        imageUrl:
+          type: string
+          format: url
+          example: http://dummy-url-to-image.com/img.jpg
+        descripton:
+          type: string
+          example: Hohner HC 03 guitar
+        count:
+          type: number
+          example: 2
+        price:
+          $ref: '#/components/schemas/Price'
+        priceGBP:
+          type: number
+          example: 98.5
+    Price:
+      required:
+      - currency
+      - value
+      type: object
+      properties:
+        value:
+          type: number
+          example: 200
+        currency:
+          type: string
+          example: USD
