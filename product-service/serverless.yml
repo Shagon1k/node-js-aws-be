@@ -34,7 +34,7 @@ functions:
     events:
       - http:
           method: get
-          path: product/{productId}
+          path: products/{productId}
           cors: true
           request:
             parameters:
