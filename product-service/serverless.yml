@@ -20,6 +20,7 @@ custom:
     webpackConfig: './config/webpack/webpack.config.js'   # Name of webpack configuration file
     packager: 'npm'   # Packager that will be used to package your external modules
     excludeFiles: src/**/*.test.js # Provide a glob for files to ignore
+    keepOutputDirectory: true
 
 functions:
   getProductsList:
