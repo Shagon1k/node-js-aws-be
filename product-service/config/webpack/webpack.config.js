@@ -13,6 +13,7 @@ module.exports = {
     path: DIST_DIR,
   },
   mode: 'development',
+  // mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
   target: 'node',
   module: {
     rules: [
