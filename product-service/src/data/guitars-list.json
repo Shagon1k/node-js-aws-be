@@ -1,0 +1,66 @@
+[
+  {
+    "count": 4,
+    "imageUrl": "https://i.ibb.co/t48k4JJ/Honer-HC-03.png",
+    "description": "Hohner HC 03 guitar",
+    "id": "guitar-1",
+    "price": 120,
+    "title": "Hohner HC 03"
+  },
+  {
+    "count": 6,
+    "imageUrl": "https://i.ibb.co/5v37th8/Honer-HC-06.png",
+    "description": "Hohner HC 06 guitar",
+    "id": "guitar-2",
+    "price": 140,
+    "title": "Hohner HC 06"
+  },
+  {
+    "count": 7,
+    "imageUrl": "https://i.ibb.co/GH2n7Gj/Yamaha-F310.jpg",
+    "description": "Yamaha F310 super guitar",
+    "id": "guitar-3",
+    "price": 220,
+    "title": "Yamaha F310"
+  },
+  {
+    "count": 12,
+    "imageUrl": "https://i.ibb.co/z4P9GSZ/Yamaha-F370-Black.jpg",
+    "description": "Yamaha F370 black guitar",
+    "id": "guitar-4",
+    "price": 300,
+    "title": "Yamaha F370"
+  },
+  {
+    "count": 7,
+    "imageUrl": "https://i.ibb.co/Vjvg9hN/Yamaha-FG800.jpg",
+    "description": "Yamaha FG800",
+    "id": "guitar-5",
+    "price": 350,
+    "title": "Product"
+  },
+  {
+    "count": 8,
+    "imageUrl": "https://i.ibb.co/Z8yD88c/Yamaha-FG-TA-BL.jpg",
+    "description": "Yamaha FG-TA BL electroaccoustic guitar",
+    "id": "guitar-6",
+    "price": 1000,
+    "title": "Yamaha FG-TA BL"
+  },
+  {
+    "count": 2,
+    "imageUrl": "https://i.ibb.co/tbpgPhj/Cort-AD810-M.jpg",
+    "description": "Cort AD810M OP guitar",
+    "id": "guitar-7",
+    "price": 140,
+    "title": "Cort AD810M OP"
+  },
+  {
+    "count": 3,
+    "imageUrl": "https://i.ibb.co/QChpDJn/Fender-CD-60-SCE.jpg",
+    "description": "Fender CD-60SCE",
+    "id": "guitar-8",
+    "price": 544,
+    "title": "Fender CD-60SCE"
+  }
+]
