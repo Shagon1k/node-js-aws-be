@@ -15,9 +15,9 @@ async function getProduct(event) {
       throw new Error(ERROR_MESSAGES.NO_SUCH_PRODUCT)
     }
 
-    const { value: priceValue, currency: priceCurrency = 'USD' } = productData?.price || {};
+    const { price } = productData;
 
-    const priceGBP = await convertPrice(priceCurrency, 'GBP', priceValue);
+    const priceGBP = await convertPrice('USD', 'GBP', price);
 
     const response = {
       statusCode: 200,
