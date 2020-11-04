@@ -6,6 +6,8 @@ export const responseMsg = 'Products List';
 
 async function getProductsList(event) {
   try {
+    console.log('Get products list lambda triggered');
+
     const requestOrigin = event?.headers?.origin || '';
     const productsData = await getProductsDBData();
     const response = {

@@ -8,6 +8,8 @@ export const responseMsg = 'Product Info';
 
 async function getProduct(event) {
   try {
+    console.log('Get product lambda triggered with params: ', event.pathParameters);
+
     const requestOrigin = event?.headers?.origin || '';
     const { productId } = event.pathParameters;
     const productData = await getProductDBData(productId);
