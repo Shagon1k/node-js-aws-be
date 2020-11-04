@@ -1,21 +1,23 @@
 import getProductsList, { responseMsg } from '../get-products-list';
+import { getProductsDBData } from '@database-controllers';
 import { prepareErrorResponse, getAccessOriginHeader } from '@handlers/helpers';
 
 jest.mock('@handlers/helpers');
+jest.mock('@database-controllers');
 
 const mockedProductsData = [
   { testProduct: 'testProduct1', id: 'testProduct1' },
   { testProduct: 'testProduct2', id: 'testProduct2' },
 ];
-jest.mock('@data/guitars-list.json', () => [
-  { testProduct: 'testProduct1', id: 'testProduct1' },
-  { testProduct: 'testProduct2', id: 'testProduct2' },
-]);
 
 let mockedOrigin;
 let mockedError;
 
 describe('getProductsList function', () => {
+  beforeAll(() => {
+    getProductsDBData.mockImplementation(() => mockedProductsData)
+  });
+
   describe('when correct event passed', () => {
     describe('and allowed origin was passed', () => {
       beforeAll(() => {

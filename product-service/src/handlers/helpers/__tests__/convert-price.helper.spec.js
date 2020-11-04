@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { CURRENCY_API } from '@config/config';
-import { ERROR_MESSAGES } from '@handlers/constants';
+import { ERROR_MESSAGES } from '@src/constants';
 
 import convertPrice from '../convert-price.helper';
 

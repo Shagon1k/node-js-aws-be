@@ -1,4 +1,5 @@
 import { getProductsDBData } from '@database-controllers';
+
 import { prepareErrorResponse, getAccessOriginHeader } from '../helpers';
 
 export const responseMsg = 'Products List';

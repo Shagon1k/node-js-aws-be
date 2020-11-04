@@ -1,5 +1,5 @@
 import { getProductDBData } from '@database-controllers';
-import { ERROR_MESSAGES } from '@handlers/constants';
+import { ERROR_MESSAGES } from '@src/constants';
 
 import { prepareErrorResponse, convertPrice, getAccessOriginHeader } from '../helpers';
 
