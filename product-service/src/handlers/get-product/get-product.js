@@ -1,4 +1,4 @@
-import productsContent from '@data/guitars-list.json';
+import { getProductDBData } from '@database-controllers';
 import { ERROR_MESSAGES } from '@handlers/constants';
 
 import { prepareErrorResponse, convertPrice, getAccessOriginHeader } from '../helpers';
@@ -9,7 +9,7 @@ async function getProduct(event) {
   try {
     const requestOrigin = event?.headers?.origin || '';
     const { productId } = event.pathParameters;
-    const productData = productsContent.find(el => el.id === productId);
+    const productData = await getProductDBData(productId);
 
     if (!productData) {
       throw new Error(ERROR_MESSAGES.NO_SUCH_PRODUCT)

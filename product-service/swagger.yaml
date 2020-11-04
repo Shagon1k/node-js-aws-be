@@ -86,7 +86,7 @@ components:
         title:
           type: string
           example: Hohner HC 03
-        imageUrl:
+        imageurl:
           type: string
           format: url
           example: http://dummy-url-to-image.com/img.jpg
@@ -97,19 +97,8 @@ components:
           type: number
           example: 2
         price:
-          $ref: '#/components/schemas/Price'
+          type: number
+          example: 140
         priceGBP:
           type: number
           example: 98.5
-    Price:
-      required:
-      - currency
-      - value
-      type: object
-      properties:
-        value:
-          type: number
-          example: 200
-        currency:
-          type: string
-          example: USD

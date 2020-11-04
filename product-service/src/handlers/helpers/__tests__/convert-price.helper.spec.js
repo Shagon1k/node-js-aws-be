@@ -2,7 +2,7 @@ import axios from 'axios';
 import { CURRENCY_API } from '@config/config';
 import { ERROR_MESSAGES } from '@handlers/constants';
 
-import convertPrice from '../convert-price';
+import convertPrice from '../convert-price.helper';
 
 const { API_URL, ROUTES } = CURRENCY_API;
 
