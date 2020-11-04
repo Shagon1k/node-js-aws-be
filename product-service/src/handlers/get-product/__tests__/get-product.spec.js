@@ -1,7 +1,8 @@
 import getProduct, { responseMsg } from '../get-product';
 import { getProductDBData } from '@database-controllers';
 import { prepareErrorResponse, getAccessOriginHeader, convertPrice } from '@handlers/helpers';
-import { ERROR_MESSAGES } from '@src/constants';
+import { NotFoundError } from '@lib/errors';
+import { ERROR_MESSAGES } from '@src/constants'
 
 jest.mock('@handlers/helpers');
 jest.mock('@database-controllers');
@@ -73,7 +74,7 @@ describe('getProduct function', () => {
             }
           };
           await getProduct(mockedEvent);
-          expect(prepareErrorResponse).toHaveBeenCalledWith(new Error(ERROR_MESSAGES.NO_SUCH_PRODUCT), 500);
+          expect(prepareErrorResponse).toHaveBeenCalledWith(new NotFoundError(ERROR_MESSAGES.NO_SUCH_PRODUCT), 404);
         });
       })
 

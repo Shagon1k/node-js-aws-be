@@ -25,7 +25,8 @@ async function getProductsList(event) {
   } catch (error) {
     console.log('Get products list request failed', error);
 
-    const errorResponse = prepareErrorResponse(error, 500);
+    const statusCode = error.code || 500;
+    const errorResponse = prepareErrorResponse(error, statusCode);
 
     return errorResponse;
   }

@@ -38,7 +38,7 @@ module.exports = {
     alias: {
       '@src': path.resolve(SRC_DIR),
       '@handlers': path.resolve(SRC_DIR, 'handlers'),
-      '@data': path.resolve(SRC_DIR, 'data'),
+      '@lib': path.resolve(SRC_DIR, 'lib'),
       '@database-controllers': path.resolve(SRC_DIR, 'database-controllers'),
       '@config': path.resolve(CONFIG_DIR),
     },

@@ -86,7 +86,7 @@ module.exports = {
   moduleNameMapper: {
     '@src(.*)$': '<rootDir>/src/$1',
     '@handlers(.*)$': '<rootDir>/src/handlers/$1',
-    '@data$': '<rootDir>/src/data/$1',
+    '@lib(.*)$': '<rootDir>/src/lib/$1',
     '@database-controllers(.*)$': '<rootDir>/src/database-controllers/$1',
     '@config(.*)$': '<rootDir>/config/$1',
   },
