@@ -38,6 +38,37 @@ paths:
                       $ref: '#/components/schemas/Product'
         "500":
           description: Server error
+    post:
+      tags:
+      - productServiceProd
+      - productServiceDev
+      description: |
+        Add new awesome guitar to products catalog
+      requestBody:
+        description: Add new product request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddProduct'
+      responses:
+        "201":
+          description: Guitar Added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/Product'
+        "400":
+          description: Passed product data is invalid
+        "500":
+          description: Server Error
+
+
   /products/{productId}:
     get:
       tags:
@@ -102,3 +133,27 @@ components:
         priceGBP:
           type: number
           example: 98.5
+    AddProduct:
+      required:
+      - title
+      - description
+      - imageUrl
+      - price
+      type: object
+      properties:
+        title:
+          type: string
+          example: Hohner HC 03
+        descripton:
+          type: string
+          example: Hohner HC 03 guitar
+        imageurl:
+          type: string
+          format: url
+          example: http://dummy-url-to-image.com/img.jpg
+        count:
+          type: number
+          example: 2
+        price:
+          type: number
+          example: 140

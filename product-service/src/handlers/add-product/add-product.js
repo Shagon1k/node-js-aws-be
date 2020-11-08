@@ -14,7 +14,7 @@ async function addProduct(event) {
     const newProductDBData = await addProductToDB({ title, description, imageurl, price, count });
 
     const response = {
-      statusCode: 200,
+      statusCode: 201,
       headers: {
         'Access-Control-Allow-Headers' : 'Content-Type',
         'Access-Control-Allow-Origin': getAccessOriginHeader(requestOrigin),
