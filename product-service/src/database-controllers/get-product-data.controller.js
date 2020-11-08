@@ -3,14 +3,15 @@ import { DataBaseError } from '@lib/errors';
 
 import { createDBConnection } from './helpers';
 
-const generateGetProductQuery = (productId) =>
+const GET_PRODUCT_QUERY =
   `SELECT p.id, p.title, p.description, p.imageUrl, p.price, s.count
-  FROM products p INNER JOIN stocks s ON (s.product_id = p.id) WHERE (p.id = '${productId}')`;
+  FROM products p INNER JOIN stocks s ON (s.product_id = p.id) WHERE (p.id = $1)`;
 
 const getProductDBData = async (productId) => {
 	const dbClient = await createDBConnection();
 	try {
-    const dbData = await dbClient.query(generateGetProductQuery(productId));
+    const values = [productId];
+    const dbData = await dbClient.query(GET_PRODUCT_QUERY, values);
     const productData = dbData?.rows?.[0];
 
 		return productData;
