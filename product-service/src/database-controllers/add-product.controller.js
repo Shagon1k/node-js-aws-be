@@ -14,20 +14,25 @@ const GET_PRODUCT_QUERY =
 const addProductToDB = async ({ title, description, imageurl, price, count = 0 }) => {
 	const dbClient = await createDBConnection();
 	try {
-		const productDataValues = [title, description, imageurl, price];
+    // Adding new product
+    await dbClient.query('BEGIN');
+    const productDataValues = [title, description, imageurl, price];
 		const { rows: productsData } = await dbClient.query(ADD_PRODUCT_QUERY, productDataValues);
 
+    // Adding stock to new product
     const addedProductId = productsData?.[0]?.id;
     const stockDataValues = [addedProductId, count];
     await dbClient.query(ADD_STOCK_QUERY, stockDataValues);
+    await dbClient.query('COMMIT');
 
+    // Returning newly added product
     const newProductDBData = await dbClient.query(GET_PRODUCT_QUERY, [addedProductId]);
     const productData = newProductDBData?.rows?.[0];
 
 		return productData;
-
 	} catch (error) {
-		console.log(error);
+    console.log(error);
+    await dbClient.query('ROLLBACK')
 
 		throw new DataBaseError(ERROR_MESSAGES.DB_HANDLING_ERROR);
 	} finally {
