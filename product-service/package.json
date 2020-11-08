@@ -4,6 +4,8 @@
   "description": "AHurynovich AWS Course Product Service",
   "scripts": {
     "deploy": "serverless deploy",
+    "deploy:dev": "serverless deploy --stage dev",
+    "deploy:prod": "serverless deploy --stage prod",
     "test": "jest --config config/jest/jest.config.js --notify"
   },
   "devDependencies": {
