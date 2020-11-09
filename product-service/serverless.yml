@@ -51,7 +51,7 @@ functions:
           cors: true
           request:
             schema:
-              application/json: ${file(config/models/add_product_request.json)}
+              application/json: ${file(swagger.yml):components.schemas.AddProduct} # ${file(config/models/add_product_request.json)}
 
 # resources:
 #   BodyRequestValidator:
