@@ -1,0 +1,30 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Add Product request schema",
+  "required": ["title", "description", "imageurl", "price"],
+  "properties": {
+    "title": {
+      "type": "string",
+      "title": "Product title"
+    },
+    "description": {
+      "type": "string",
+      "title": "Product description"
+    },
+    "imageurl": {
+      "type": "string",
+      "title": "Product image (url)"
+    },
+    "price": {
+      "type": "number",
+      "title": "Product price"
+    },
+    "count": {
+      "type": "number",
+      "title": "Product count",
+      "default": 0
+    }
+  }
+}

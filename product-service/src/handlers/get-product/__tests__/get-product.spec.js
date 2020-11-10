@@ -1,13 +1,16 @@
 import getProduct, { responseMsg } from '../get-product';
+import { getProductDBData } from '@database-controllers';
 import { prepareErrorResponse, getAccessOriginHeader, convertPrice } from '@handlers/helpers';
-import { ERROR_MESSAGES } from '@handlers/constants';
+import { NotFoundError } from '@lib/errors';
+import { ERROR_MESSAGES } from '@src/constants'
 
 jest.mock('@handlers/helpers');
+jest.mock('@database-controllers');
 
-jest.mock('@data/guitars-list.json', () => [
-  { testProduct: 'testProduct1', id: 'testProduct1' },
-  { testProduct: 'testProduct2', id: 'testProduct2' },
-]);
+const mockedProductsData = {
+  testProduct1: { testProduct: 'testProduct1', id: 'testProduct1' },
+  testProduct2: { testProduct: 'testProduct2', id: 'testProduct2' },
+};
 
 let mockedOrigin;
 let mockedError;
@@ -20,6 +23,7 @@ describe('getProduct function', () => {
       priceGBP: mockedPriceGBP
     };
     convertPrice.mockReturnValue(Promise.resolve(mockedPriceGBP));
+    getProductDBData.mockImplementation((productId) => mockedProductsData[productId])
   });
   describe('when correct event passed', () => {
     describe('and allowed origin was passed', () => {
@@ -70,7 +74,7 @@ describe('getProduct function', () => {
             }
           };
           await getProduct(mockedEvent);
-          expect(prepareErrorResponse).toHaveBeenCalledWith(new Error(ERROR_MESSAGES.NO_SUCH_PRODUCT), 500);
+          expect(prepareErrorResponse).toHaveBeenCalledWith(new NotFoundError(ERROR_MESSAGES.NO_SUCH_PRODUCT), 404);
         });
       })
 

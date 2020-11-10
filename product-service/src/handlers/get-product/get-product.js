@@ -1,5 +1,6 @@
-import productsContent from '@data/guitars-list.json';
-import { ERROR_MESSAGES } from '@handlers/constants';
+import { getProductDBData } from '@database-controllers';
+import { ERROR_MESSAGES } from '@src/constants';
+import { NotFoundError } from '@lib/errors';
 
 import { prepareErrorResponse, convertPrice, getAccessOriginHeader } from '../helpers';
 
@@ -7,12 +8,14 @@ export const responseMsg = 'Product Info';
 
 async function getProduct(event) {
   try {
+    console.log('Get product lambda triggered with params: ', event.pathParameters);
+
     const requestOrigin = event?.headers?.origin || '';
     const { productId } = event.pathParameters;
-    const productData = productsContent.find(el => el.id === productId);
+    const productData = await getProductDBData(productId);
 
     if (!productData) {
-      throw new Error(ERROR_MESSAGES.NO_SUCH_PRODUCT)
+      throw new NotFoundError(ERROR_MESSAGES.NO_SUCH_PRODUCT)
     }
 
     const { price } = productData;
@@ -39,7 +42,8 @@ async function getProduct(event) {
   } catch (error) {
     console.log('Get product request error', error);
 
-    const errorResponse = prepareErrorResponse(error, 500);
+    const statusCode = error.code || 500;
+    const errorResponse = prepareErrorResponse(error, statusCode);
 
     return errorResponse;
   }

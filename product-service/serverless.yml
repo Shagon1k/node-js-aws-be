@@ -3,7 +3,7 @@ service:
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
 #org: your-org-name
-frameworkVersion: '2'
+frameworkVersion: "2"
 
 provider:
   name: aws
@@ -14,11 +14,12 @@ provider:
 # Add the serverless-webpack plugin
 plugins:
   - serverless-webpack
+  - serverless-dotenv-plugin
 
 custom:
   webpack:
-    webpackConfig: './config/webpack/webpack.config.js'   # Name of webpack configuration file
-    packager: 'npm'   # Packager that will be used to package your external modules
+    webpackConfig: "./config/webpack/webpack.config.js"   # Name of webpack configuration file
+    packager: "npm"   # Packager that will be used to package your external modules
     excludeFiles: src/**/*.test.js # Provide a glob for files to ignore
     keepOutputDirectory: true
 
@@ -41,3 +42,30 @@ functions:
             parameters:
               paths:
                 productId: true
+  addProduct:
+    handler: handler.addProduct
+    events:
+      - http:
+          method: post
+          path: products
+          cors: true
+          request:
+            schema:
+              application/json: ${file(swagger.yml):components.schemas.AddProduct} # ${file(config/models/add_product_request.json)}
+
+# resources:
+#   BodyRequestValidator:
+#     Type: AWS::ApiGateway::RequestValidator
+#     Properties:
+#       Name: BodyRequestValidator
+#       RestApiId:
+#         Ref: ApiGatewayRestApi
+#       ValidateRequestBody: true
+#       ValidateRequestParameters: false
+
+#   ApiGatewayMethodProductsPost:
+#     Properties:
+#       RequestValidatorId:
+#         Ref: BodyRequestValidator
+
+

@@ -1,4 +1,4 @@
-import getAccessOriginHeader from '../get-access-origin-header';
+import getAccessOriginHeader from '../get-access-origin-header.helper';
 
 describe('getAccessOriginHeader function', () => {
   describe('when correct parameters was passed', () => {

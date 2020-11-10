@@ -8,4 +8,7 @@ jspm_packages
 # Webpack directories
 .webpack
 
+# Environment variables
+.env
+
 /dist

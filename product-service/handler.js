@@ -1,6 +1,7 @@
-import { getProductsList, getProduct } from '@handlers';
+import { getProductsList, getProduct, addProduct } from '@handlers';
 
 export {
   getProduct,
-  getProductsList
+  getProductsList,
+  addProduct
 };

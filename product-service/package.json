@@ -4,6 +4,8 @@
   "description": "AHurynovich AWS Course Product Service",
   "scripts": {
     "deploy": "serverless deploy",
+    "deploy:dev": "serverless deploy --stage dev",
+    "deploy:prod": "serverless deploy --stage prod",
     "test": "jest --config config/jest/jest.config.js --notify"
   },
   "devDependencies": {
@@ -15,7 +17,10 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.0",
+    "serverless-aws-documentation": "^1.1.0",
+    "serverless-dotenv-plugin": "^3.1.0",
     "serverless-offline": "^6.8.0",
+    "serverless-reqvalidator-plugin": "^1.0.3",
     "serverless-webpack": "^5.3.1",
     "webpack": "^4.35.2",
     "webpack-cli": "^4.1.0"
@@ -25,6 +30,7 @@
   "dependencies": {
     "@babel/cli": "^7.12.1",
     "axios": "^0.21.0",
-    "fs-extra": "^9.0.1"
+    "fs-extra": "^9.0.1",
+    "pg": "^8.4.2"
   }
 }
