@@ -121,7 +121,7 @@ components:
           type: string
           format: url
           example: http://dummy-url-to-image.com/img.jpg
-        descripton:
+        description:
           type: string
           example: Hohner HC 03 guitar
         count:
@@ -144,7 +144,7 @@ components:
         title:
           type: string
           example: Hohner HC 03
-        descripton:
+        description:
           type: string
           example: Hohner HC 03 guitar
         imageurl:
