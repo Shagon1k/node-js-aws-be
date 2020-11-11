@@ -1,0 +1,31 @@
+{
+  "name": "import-service",
+  "version": "1.0.0",
+  "description": "AHurynovich AWS Course Import Service",
+  "scripts": {
+    "deploy": "serverless deploy",
+    "deploy:dev": "serverless deploy --stage dev",
+    "deploy:prod": "serverless deploy --stage prod",
+    "test": "jest --config config/jest/jest.config.js --notify"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/register": "^7.12.1",
+    "babel-loader": "^8.1.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "serverless-aws-documentation": "^1.1.0",
+    "serverless-offline": "^6.8.0",
+    "serverless-webpack": "^5.3.1",
+    "webpack": "^4.35.2",
+    "webpack-cli": "^4.1.0"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@babel/cli": "^7.12.1",
+    "aws-sdk": "^2.788.0"
+  }
+}
