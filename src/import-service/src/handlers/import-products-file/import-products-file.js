@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 import { prepareErrorResponse, getAccessOriginHeader } from '../helpers';
-import { BUCKET_NAME, BUCKET_REGION } from '@src/constants';
+import { BUCKET_NAME, BUCKET_REGION } from '@config/config';
 import { BadRequestError } from '@lib/errors';
 import { ERROR_MESSAGES } from '@src/constants';
 
@@ -22,12 +22,27 @@ async function importProductsFile(event) {
     const importKey = `uploaded/${name}`
     const s3Params = {
       Bucket: BUCKET_NAME,
-      Key: importKey
+      Key: importKey,
+      Expires: 60,
+      ContentType: 'text/csv'
     };
 
-    await s3.putObject(s3Params).promise();
+    /* Note: Using asynchronous flow with callback is more safe in case credentials will expire.
+     * Alternative (synchronous) implementation:
+     * const signedUrl = s3.getSignedUrl('putObject', s3Params);
+     */
+    const signedUrl = await new Promise(function(resolve, reject) {
+      s3.getSignedUrl('putObject', s3Params, function(err, data) {
+          if (err) {
+              reject(err);
+          } else {
+              resolve(data);
+          }
+      });
+    });
 
-    const signedUrl = `${getBucketUrl(BUCKET_NAME)}${importKey}`;
+    console.log('Created signed url:', signedUrl);
+
     const response = {
       statusCode: 200,
       headers: {
@@ -43,7 +58,7 @@ async function importProductsFile(event) {
 
     return response;
   } catch (error) {
-    console.log('Get products list request failed', error);
+    console.error('Import products file failed!', error);
 
     const statusCode = error.code || 500;
     const errorResponse = prepareErrorResponse(error, statusCode);

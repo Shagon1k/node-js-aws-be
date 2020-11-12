@@ -1,5 +1,6 @@
-import { importProductsFile } from '@handlers';
+import { importProductsFile, importFileParser } from '@handlers';
 
 export {
-  importProductsFile
+  importProductsFile,
+  importFileParser
 };

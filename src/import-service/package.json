@@ -26,6 +26,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/cli": "^7.12.1",
-    "aws-sdk": "^2.788.0"
+    "aws-sdk": "^2.788.0",
+    "csv-parser": "^2.3.3"
   }
 }
