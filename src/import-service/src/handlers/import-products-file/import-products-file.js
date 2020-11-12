@@ -17,7 +17,6 @@ async function importProductsFile(event) {
       throw new BadRequestError(ERROR_MESSAGES.IMPORT_INVALID_PARAMS);
     }
 
-    // TODO: Worth to check whether such file already exists via s3.listObjectsV2(...).Contents
     const s3 = new AWS.S3({ region: BUCKET_REGION, signatureVersion: 'v4' });
     const importKey = `uploaded/${name}`
     const s3Params = {

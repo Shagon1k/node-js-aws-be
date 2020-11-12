@@ -18,6 +18,7 @@ function importFileParser(event) {
 			S3_FOULDERS_NAMES_MAP.PARSED
     );
 
+    // Getting newly added object
     const s3ReadStream = s3.getObject({ ...s3DefaultParams, Key: originalRecordKey }).createReadStream();
 
     s3ReadStream.pipe(csv())
