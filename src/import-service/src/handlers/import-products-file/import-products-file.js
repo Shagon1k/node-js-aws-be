@@ -6,8 +6,6 @@ import { ERROR_MESSAGES } from '@src/constants';
 
 export const responseMsg = 'Import signed url created successfully!';
 
-const getBucketUrl = (bucketName) => `https://${bucketName}.s3.amazonaws.com/`;
-
 async function importProductsFile(event) {
   try {
     console.log('Import products lambda triggered');
