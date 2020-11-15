@@ -30,15 +30,7 @@ async function importProductsFile(event) {
      * Alternative (synchronous) implementation:
      * const signedUrl = s3.getSignedUrl('putObject', s3Params);
      */
-    const signedUrl = await new Promise(function(resolve, reject) {
-      s3.getSignedUrl('putObject', s3Params, function(err, data) {
-          if (err) {
-              reject(err);
-          } else {
-              resolve(data);
-          }
-      });
-    });
+    const signedUrl = await s3.getSignedUrlPromise('putObject', s3Params);
 
     console.log('Created signed url:', signedUrl);
 
