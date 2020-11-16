@@ -1,9 +1,10 @@
 import AWS from 'aws-sdk';
 import csv from 'csv-parser';
 import { BUCKET_NAME, BUCKET_REGION, S3_FOULDERS_NAMES_MAP } from '@config/config';
+import logger from '@lib/logger';
 
 async function importFileParser(event) {
-	console.log('Import file parser lambda triggered');
+	logger.log('Import file parser lambda triggered');
 
 	const s3 = new AWS.S3({ region: BUCKET_REGION });
 	const s3DefaultParams = {
@@ -25,14 +26,14 @@ async function importFileParser(event) {
 				s3ReadStream
 					.pipe(csv())
 					.on('data', (data) => {
-						console.log('CSV parse stream data:', data);
+						logger.log('CSV parse stream data:', data);
 					})
 					.on('error', (error) => reject(error))
 					.on('end', async () => {
 						const copySource = `${BUCKET_NAME}/${originalRecordKey}`;
 
-						console.log('Copying from: ', copySource);
-						console.log('Copying to: ', parsedRecordKey);
+						logger.log('Copying from: ', copySource);
+						logger.log('Copying to: ', parsedRecordKey);
 
 						// Copying parsed record from 'uploaded' into 'parsed' folder
 						await s3
@@ -43,8 +44,8 @@ async function importFileParser(event) {
 							})
 							.promise();
 
-						console.log('Successfully copied!');
-						console.log('Removing original record: ', originalRecordKey);
+						logger.log('Successfully copied!');
+						logger.log('Removing original record: ', originalRecordKey);
 
 						// Removing original record from 'uploaded' folder
 						await s3
@@ -54,7 +55,7 @@ async function importFileParser(event) {
 							})
 							.promise();
 
-						console.log('Successfully removed!');
+						logger.log('Successfully removed!');
 
 						resolve(`Record ${originalRecordKey} handled successfully!`);
 					});

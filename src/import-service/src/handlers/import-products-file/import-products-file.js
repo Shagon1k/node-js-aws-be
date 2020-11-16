@@ -2,13 +2,14 @@ import AWS from 'aws-sdk';
 import { prepareErrorResponse, getAccessOriginHeader } from '../helpers';
 import { BUCKET_NAME, BUCKET_REGION } from '@config/config';
 import { BadRequestError } from '@lib/errors';
+import logger from '@lib/logger';
 import { ERROR_MESSAGES } from '@src/constants';
 
 export const responseMsg = 'Import signed url created successfully!';
 
 async function importProductsFile(event) {
   try {
-    console.log('Import products lambda triggered');
+    logger.log('Import products lambda triggered');
     const requestOrigin = event?.headers?.origin || '';
     const { name } = event?.queryStringParameters || {};
     if (!name) {
@@ -38,7 +39,7 @@ async function importProductsFile(event) {
       });
     });
 
-    console.log('Created signed url:', signedUrl);
+    logger.log('Created signed url:', signedUrl);
 
     const response = {
       statusCode: 200,
@@ -55,7 +56,7 @@ async function importProductsFile(event) {
 
     return response;
   } catch (error) {
-    console.error('Import products file failed!', error);
+    logger.error('Import products file failed!', error);
 
     const statusCode = error.code || 500;
     const errorResponse = prepareErrorResponse(error, statusCode);

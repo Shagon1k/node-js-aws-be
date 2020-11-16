@@ -1,5 +1,6 @@
 const slsw = require('serverless-webpack');
 const path = require('path');
+const webpack = require('webpack');
 
 const environmentConstants = require('./environments');
 
@@ -30,7 +31,12 @@ module.exports = {
       },
     ],
   },
-  plugins: [],
+  plugins: [
+    new webpack.DefinePlugin({
+      TEST: false,
+      LOG: true
+    })
+  ],
   resolve: {
     alias: {
       '@src': path.resolve(SRC_DIR),
