@@ -1,0 +1,43 @@
+---
+openapi: 3.0.0
+info:
+  title: AHurynovich AWS Import Service API
+  description: Documentation of AHurynovich AWS Import Service API (awesome guitars)
+  contact:
+    email: shagon1k@gmail.com
+  version: 1.0.0-oas3
+servers:
+- url: https://dziq1ndu17.execute-api.eu-west-1.amazonaws.com/prod
+- url: http://dziq1ndu17.execute-api.eu-west-1.amazonaws.com/prod
+tags:
+- name: importProductsFile
+  description: Import Service production version
+paths:
+  /import:
+    get:
+      tags:
+      - importProductsFile
+      description: |
+        Get signed url for products file import
+      parameters:
+      - name: name
+        in: query
+        description: New file name
+        required: true
+        schema:
+          type: string
+        example: dummy.csv
+      responses:
+        "200":
+          description: Signed url for import CSV
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  data:
+                    type: string
+        "500":
+          description: Server error
