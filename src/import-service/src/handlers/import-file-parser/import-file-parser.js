@@ -3,6 +3,18 @@ import csv from 'csv-parser';
 import { BUCKET_NAME, BUCKET_REGION, S3_FOULDERS_NAMES_MAP, SQS_URL } from '@config/config';
 import logger from '@lib/logger';
 
+const prepareProductData = (data) => {
+  let preparedData = {};
+  const { price: originalPrice } = data;
+
+  preparedData = {
+    ...data,
+    price: originalPrice ? Number(originalPrice) : undefined
+  }
+
+  return preparedData;
+}
+
 async function importFileParser(event) {
 	logger.log('Import file parser lambda triggered');
 
@@ -29,11 +41,16 @@ async function importFileParser(event) {
 					.pipe(csv())
 					.on('data', (data) => {
             logger.log('CSV parse stream data:', data);
+            const preparedData = prepareProductData(data);
+            const stringifiedData = JSON.stringify(preparedData);
             sqs.sendMessage({
               QueueUrl: SQS_URL,
-              MessageBody: data
-            }, () => {
-              console.log(`Send message to ${SQS_URL}. Message: ${JSON.stringify(data)}`);
+              MessageBody: stringifiedData
+            }, (error) => {
+              if (error) {
+                console.log('error', error);
+              }
+              console.log(`Send message to ${SQS_URL}. Message: ${stringifiedData}`);
             });
 
 					})

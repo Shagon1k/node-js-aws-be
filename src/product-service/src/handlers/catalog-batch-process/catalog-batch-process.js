@@ -1,7 +1,5 @@
 import { addProductToDB } from '@database-controllers';
 import { ERROR_MESSAGES } from '@src/constants';
-import { BadRequestError } from '@lib/errors';
-import { prepareErrorResponse, getAccessOriginHeader } from '../helpers';
 
 export const responseMsg = 'Product was added!';
 
@@ -19,20 +17,28 @@ const checkIsDataValid = (productData) => {
 async function catalogBatchProcess(event) {
 		console.log('Catalog batch process lambda triggered with event: ', event);
 
-    const productData = JSON.parse(event?.body);
+    const productsData = event.Records.map(({ body }) => JSON.parse(body));
+    const addedProducts = [];
 
-    console.log(productData);
+    console.log('Received data: ', productsData);
 
-    // if (!checkIsDataValid(productData)) {
-    //   throw new BadRequestError(ERROR_MESSAGES.INVALID_PRODUCT);
-    // }
+    for (let productData of productsData) {
+      if (!checkIsDataValid(productData)) {
+        console.log(ERROR_MESSAGES.INVALID_PRODUCT);
+        console.log('Product was not added! ', productData);
 
-		// const { title, description, imageurl, price, count } = productData;
+        return;
+      };
+      const { title, description, imageurl, price, count } = productData
+      const newProductDBData = await addProductToDB({ title, description, imageurl, price, count });
+      addedProducts.push(newProductDBData);
+    }
 
-		// const newProductDBData = await addProductToDB({ title, description, imageurl, price, count });
+    console.log('Added products: ', addedProducts);
 
 		const response = {
       statusCode: 202,
+      addedProducts: JSON.stringify(addedProducts)
     };
 
     return response;

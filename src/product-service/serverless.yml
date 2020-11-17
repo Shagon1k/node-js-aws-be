@@ -53,11 +53,8 @@ functions:
             schema:
               application/json: ${file(swagger.yml):components.schemas.AddProduct} # ${file(config/models/add_product_request.json)}
   catalogBatchProcess:
-    handler:
+    handler: handler.catalogBatchProcess
     events:
       - sqs:
-        batchSize: 5
-        arn:
-          Fn:GetAtt:
-            - SQSQueue
-            - Arn
+          batchSize: 5
+          arn: arn:aws:sqs:eu-west-1:134482326508:products-service-sqs-queue

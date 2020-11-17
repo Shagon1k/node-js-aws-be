@@ -20,14 +20,19 @@ provider:
         - "s3:*"
       Resource:
         - "arn:aws:s3:::rs-school-app-shagon1k-uploaded/*"
+    - Effect: "Allow"
+      Action: "sqs:*"
+      Resource:
+        - "arn:aws:sqs:eu-west-1:134482326508:products-service-sqs-queue"
   environment:
     SQS_URL:
-      Ref:
+      Ref: SQSQueue
+
 resources:
   Resources:
     SQSQueue:
       Type: AWS::SQS::Queue
-      Propertyes:
+      Properties:
         QueueName: products-service-sqs-queue
 
 # Add the serverless-webpack plugin
