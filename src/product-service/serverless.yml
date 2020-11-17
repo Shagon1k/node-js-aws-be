@@ -52,20 +52,12 @@ functions:
           request:
             schema:
               application/json: ${file(swagger.yml):components.schemas.AddProduct} # ${file(config/models/add_product_request.json)}
-
-# resources:
-#   BodyRequestValidator:
-#     Type: AWS::ApiGateway::RequestValidator
-#     Properties:
-#       Name: BodyRequestValidator
-#       RestApiId:
-#         Ref: ApiGatewayRestApi
-#       ValidateRequestBody: true
-#       ValidateRequestParameters: false
-
-#   ApiGatewayMethodProductsPost:
-#     Properties:
-#       RequestValidatorId:
-#         Ref: BodyRequestValidator
-
-
+  catalogBatchProcess:
+    handler:
+    events:
+      - sqs:
+        batchSize: 5
+        arn:
+          Fn:GetAtt:
+            - SQSQueue
+            - Arn

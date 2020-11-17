@@ -11,3 +11,5 @@ export const S3_FOULDERS_NAMES_MAP = {
 	UPLOADED: 'uploaded',
 	PARSED: 'parsed',
 };
+
+export const SQS_URL = process.env.SQS_URL;

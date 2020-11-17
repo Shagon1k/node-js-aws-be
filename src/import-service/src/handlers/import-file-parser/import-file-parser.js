@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 import csv from 'csv-parser';
-import { BUCKET_NAME, BUCKET_REGION, S3_FOULDERS_NAMES_MAP } from '@config/config';
+import { BUCKET_NAME, BUCKET_REGION, S3_FOULDERS_NAMES_MAP, SQS_URL } from '@config/config';
 import logger from '@lib/logger';
 
 async function importFileParser(event) {
@@ -9,7 +9,9 @@ async function importFileParser(event) {
 	const s3 = new AWS.S3({ region: BUCKET_REGION });
 	const s3DefaultParams = {
 		Bucket: BUCKET_NAME,
-	};
+  };
+
+  const sqs = new AWS.SQS();
 
 	const recordsPromises = event.Records.map(
 		(record) =>
@@ -26,7 +28,14 @@ async function importFileParser(event) {
 				s3ReadStream
 					.pipe(csv())
 					.on('data', (data) => {
-						logger.log('CSV parse stream data:', data);
+            logger.log('CSV parse stream data:', data);
+            sqs.sendMessage({
+              QueueUrl: SQS_URL,
+              MessageBody: data
+            }, () => {
+              console.log(`Send message to ${SQS_URL}. Message: ${JSON.stringify(data)}`);
+            });
+
 					})
 					.on('error', (error) => reject(error))
 					.on('end', async () => {
