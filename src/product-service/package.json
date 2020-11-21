@@ -29,6 +29,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/cli": "^7.12.1",
+    "aws-sdk": "^2.794.0",
     "axios": "^0.21.0",
     "fs-extra": "^9.0.1",
     "pg": "^8.4.2"

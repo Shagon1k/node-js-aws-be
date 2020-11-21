@@ -10,6 +10,14 @@ provider:
   runtime: nodejs12.x
   region: eu-west-1
   stage: dev
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: "sns:*"
+      Resource:
+        Ref: SNSTopic
+  environment:
+    SNS_ARN:
+      Ref: SNSTopic
 
 # Add the serverless-webpack plugin
 plugins:
@@ -22,6 +30,20 @@ custom:
     packager: "npm"   # Packager that will be used to package your external modules
     excludeFiles: src/**/*.test.js # Provide a glob for files to ignore
     keepOutputDirectory: true
+
+resources:
+  Resources:
+    SNSTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: createProductTopic
+    SNSSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: shagon1k@gmail.com
+        Protocol: email
+        TopicArn:
+          Ref: SNSTopic
 
 functions:
   getProductsList:
@@ -57,4 +79,5 @@ functions:
     events:
       - sqs:
           batchSize: 5
-          arn: arn:aws:sqs:eu-west-1:134482326508:products-service-sqs-queue
+          arn:
+            - "${cf:import-service-prod.SQSQueueArn}"

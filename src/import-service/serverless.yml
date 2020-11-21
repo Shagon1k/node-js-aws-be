@@ -23,7 +23,7 @@ provider:
     - Effect: "Allow"
       Action: "sqs:*"
       Resource:
-        - "arn:aws:sqs:eu-west-1:134482326508:products-service-sqs-queue"
+        Fn::GetAtt: [SQSQueue, Arn]
   environment:
     SQS_URL:
       Ref: SQSQueue
@@ -33,7 +33,11 @@ resources:
     SQSQueue:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: products-service-sqs-queue
+        QueueName: catalogItemsQueue
+  Outputs:
+    SQSQueueArn:
+      Value:
+        Fn::GetAtt: [SQSQueue, Arn]
 
 # Add the serverless-webpack plugin
 plugins:

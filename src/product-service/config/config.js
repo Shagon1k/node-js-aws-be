@@ -11,3 +11,6 @@ export const ALLOWED_REQUEST_ORIGINS = [
   "https://d2zvo2vdnqfgz1.cloudfront.net",
   "http://d2zvo2vdnqfgz1.cloudfront.net",
 ];
+
+export const SNS_ARN = process.env.SNS_ARN;
+export const SNS_REGION = 'eu-west-1';
