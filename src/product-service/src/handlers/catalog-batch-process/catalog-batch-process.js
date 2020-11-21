@@ -36,36 +36,37 @@ async function catalogBatchProcess(event) {
 		if (!checkIsDataValid(productData)) {
 			logger.log(ERROR_MESSAGES.INVALID_PRODUCT);
       logger.log('Product was not added!', productData);
-      logger.log('Deleting data for receipt handle: ', receiptHandle);
-      logger.log('SQS URL', SQS_URL);
-      sqs.deleteMessage({
-        QueueUrl: SQS_URL,
-        ReceiptHandle: receiptHandle
-      }, (error, data) => {
-        if (error) {
-          logger.log('Error occured when deleting receipt: ', receiptHandle);
-        } else {
-          logger.log('Deleted: ', data);
-        }
-      })
+
+      try {
+        let deleteResp = await sqs.deleteMessage({
+          QueueUrl: SQS_URL,
+          ReceiptHandle: receiptHandle
+        }).promise();
+
+        logger.log('Deleted SQS: ', deleteResp);
+      } catch (error) {
+        logger.log(`Error occured when deleting receipt: ${receiptHandle}`, error);
+      }
+
 		} else {
 			const { title, description, imageurl, price, count } = productData;
-			const newProductDBData = await addProductToDB({ title, description, imageurl, price, count });
+      const newProductDBData = await addProductToDB({ title, description, imageurl, price, count });
 
-			sns.publish(
-				{
-					Subject: 'New guitar was added to DataBase',
-					Message: `New guitar was added. Guitar info: ${JSON.stringify(newProductDBData)}`,
-					TopicArn: SNS_ARN,
-				},
-				(error) => {
-					if (error) {
-						logger.log('Error occured during subscribtion', error);
-					} else {
-            logger.log('Send email for subscriber, data: ', JSON.stringify(newProductDBData));
+      logger.log('Send email for subscriber, data: ', JSON.stringify(newProductDBData));
+
+      try {
+        let publishResp = await sns.publish(
+          {
+            Subject: 'New guitar was added to DataBase',
+            Message: `New guitar was added. Guitar info: ${JSON.stringify(newProductDBData)}`,
+            TopicArn: SNS_ARN,
           }
-				}
-			);
+        ).promise();
+
+        logger.log('Publish data', publishResp);
+      } catch (error) {
+        logger.log('Error occured when sending email', error);
+      }
 
 			addedProducts.push(newProductDBData);
 		}
