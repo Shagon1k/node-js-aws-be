@@ -9,7 +9,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: eu-west-1
-  stage: dev
+  stage: ${self:custom.stage}
   iamRoleStatements:
     - Effect: "Allow"
       Action: "sns:*"
@@ -30,6 +30,7 @@ custom:
     packager: "npm"   # Packager that will be used to package your external modules
     excludeFiles: src/**/*.test.js # Provide a glob for files to ignore
     keepOutputDirectory: true
+  stage: ${opt:stage,dev}
 
 resources:
   Resources:
@@ -80,4 +81,4 @@ functions:
       - sqs:
           batchSize: 5
           arn:
-            - "${cf:import-service-prod.SQSQueueArn}"
+            - "${cf:import-service-${self:custom.stage}.SQSQueueArn}"

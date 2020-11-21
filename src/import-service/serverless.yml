@@ -9,7 +9,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: eu-west-1
-  stage: prod
+  stage: ${self:custom.stage}
   iamRoleStatements:
     - Effect: "Allow"
       Action: "s3:ListBucket"
@@ -49,6 +49,7 @@ custom:
     packager: "npm"   # Packager that will be used to package your external modules
     excludeFiles: src/**/*.test.js # Provide a glob for files to ignore
     keepOutputDirectory: true
+  stage: ${opt:stage,dev}
 
 functions:
   importProductsFile:
