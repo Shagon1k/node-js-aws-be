@@ -15,9 +15,15 @@ provider:
       Action: "sns:*"
       Resource:
         Ref: SNSTopic
+    - Effect: "Allow"
+      Action: "sqs:*"
+      Resource:
+        - "${cf:import-service-${self:custom.stage}.SQSQueueArn}"
   environment:
     SNS_ARN:
       Ref: SNSTopic
+    SQS_URL:
+      - "${cf:import-service-${self:custom.stage}.SQSQueue}"
 
 # Add the serverless-webpack plugin
 plugins:

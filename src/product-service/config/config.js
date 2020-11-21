@@ -13,4 +13,6 @@ export const ALLOWED_REQUEST_ORIGINS = [
 ];
 
 export const SNS_ARN = process.env.SNS_ARN;
+export const SQS_URL = process.env.SQS_URL;
 export const SNS_REGION = 'eu-west-1';
+export const SQS_REGION = 'eu-west-1';

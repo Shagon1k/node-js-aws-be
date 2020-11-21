@@ -1,12 +1,12 @@
 import { getProductsDBData } from '@database-controllers';
-
 import { prepareErrorResponse, getAccessOriginHeader } from '../helpers';
+import logger from '@lib/logger';
 
 export const responseMsg = 'Products List';
 
 async function getProductsList(event) {
   try {
-    console.log('Get products list lambda triggered');
+    logger.log('Get products list lambda triggered');
 
     const requestOrigin = event?.headers?.origin || '';
     const productsData = await getProductsDBData();
@@ -25,7 +25,7 @@ async function getProductsList(event) {
 
     return response;
   } catch (error) {
-    console.log('Get products list request failed', error);
+    logger.log('Get products list request failed', error);
 
     const statusCode = error.code || 500;
     const errorResponse = prepareErrorResponse(error, statusCode);

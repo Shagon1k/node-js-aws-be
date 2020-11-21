@@ -2,6 +2,7 @@ import { addProductToDB } from '@database-controllers';
 import { ERROR_MESSAGES } from '@src/constants';
 import { BadRequestError } from '@lib/errors';
 import { prepareErrorResponse, getAccessOriginHeader } from '../helpers';
+import logger from '@lib/logger';
 
 export const responseMsg = 'Product was added!';
 
@@ -18,7 +19,7 @@ const checkIsDataValid = (productData) => {
 
 async function addProduct(event) {
 	try {
-		console.log('Add product lambda triggered with event: ', event);
+		logger.log('Add product lambda triggered with event: ', event);
 
 		const requestOrigin = event?.headers?.origin || '';
     const productData = JSON.parse(event?.body);
@@ -46,7 +47,7 @@ async function addProduct(event) {
 
 		return response;
 	} catch (error) {
-		console.log('Add product request error', error);
+		logger.log('Add product request error', error);
 
 		const statusCode = error.code || 500;
 		const errorResponse = prepareErrorResponse(error, statusCode);

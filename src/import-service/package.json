@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "AHurynovich AWS Course Import Service",
   "scripts": {
-    "deploy": "serverless deploy",
+    "deploy": "serverless deploy --stage prod",
     "deploy:dev": "serverless deploy --stage dev",
     "deploy:prod": "serverless deploy --stage prod",
     "test": "jest --config config/jest/jest.config.js --notify"

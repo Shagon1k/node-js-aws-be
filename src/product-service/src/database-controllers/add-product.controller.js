@@ -3,6 +3,8 @@ import { DataBaseError } from '@lib/errors';
 
 import { createDBConnection } from './helpers';
 
+import logger from '@lib/logger';
+
 const ADD_PRODUCT_QUERY = `INSERT INTO products (title, description, imageUrl, price)
   VALUES($1, $2, $3, $4) RETURNING *`;
 const ADD_STOCK_QUERY = `INSERT INTO stocks (product_id, count) VALUES($1, $2)`;
@@ -31,7 +33,7 @@ const addProductToDB = async ({ title, description, imageurl, price, count = 0 }
 
 		return productData;
 	} catch (error) {
-    console.log(error);
+    logger.log(error);
     await dbClient.query('ROLLBACK')
 
 		throw new DataBaseError(ERROR_MESSAGES.DB_HANDLING_ERROR);

@@ -32,7 +32,11 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.IgnorePlugin(/^pg-native$/)
+    new webpack.IgnorePlugin(/^pg-native$/),
+    new webpack.DefinePlugin({
+      TEST: false,
+      LOG: true
+    })
   ],
   resolve: {
     alias: {
