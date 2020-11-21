@@ -43,9 +43,10 @@ async function catalogBatchProcess(event) {
         ReceiptHandle: receiptHandle
       }, (error, data) => {
         if (error) {
-          console.log('Error occured when deleting receipt: ', receiptHandle);
+          logger.log('Error occured when deleting receipt: ', receiptHandle);
+        } else {
+          logger.log('Deleted: ', data);
         }
-        console.log('Deleted: ', data);
       })
 		} else {
 			const { title, description, imageurl, price, count } = productData;
@@ -60,8 +61,9 @@ async function catalogBatchProcess(event) {
 				(error) => {
 					if (error) {
 						logger.log('Error occured during subscribtion', error);
-					}
-					logger.log('Send email for subscriber, data: ', JSON.stringify(newProductDBData));
+					} else {
+            logger.log('Send email for subscriber, data: ', JSON.stringify(newProductDBData));
+          }
 				}
 			);
 

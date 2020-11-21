@@ -49,8 +49,9 @@ async function importFileParser(event) {
             }, (error) => {
               if (error) {
                 console.log('error', error);
+              } else {
+                console.log(`Send message to ${SQS_URL}. Message: ${stringifiedData}`);
               }
-              console.log(`Send message to ${SQS_URL}. Message: ${stringifiedData}`);
             });
 
 					})
