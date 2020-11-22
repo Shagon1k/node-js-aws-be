@@ -7,7 +7,7 @@ import logger from '@lib/logger';
 
 export const responseMsg = 'Products was added!';
 
-const FILTER_ELECTRIC_GUITAR_TYPE = snsFilterConfig.filter.values.electric
+const FILTER_ELECTRIC_GUITAR_TYPE = snsFilterConfig.filter.values.electric;
 const FILTER_NON_ELECTRIC_GUITAR_TYPE = snsFilterConfig.filter.values.nonelectric;
 
 const checkIsDataValid = (productData) => {
@@ -61,7 +61,7 @@ async function catalogBatchProcess(event) {
 					? FILTER_ELECTRIC_GUITAR_TYPE
 					: FILTER_NON_ELECTRIC_GUITAR_TYPE;
 
-      logger.log('Newly added guitar type is: ', guitarType);
+			logger.log('Newly added guitar type is: ', guitarType);
 
 			try {
 				let publishResp = await sns
@@ -69,12 +69,12 @@ async function catalogBatchProcess(event) {
 						Subject: 'New guitar was added to DataBase',
 						Message: `New guitar was added. Guitar info: ${JSON.stringify(newProductDBData)}`,
 						TopicArn: SNS_ARN,
-            MessageAttributes: {
-              'guitarType': {
-                DataType: 'String',
-                StringValue: guitarType
-              }
-            }
+						MessageAttributes: {
+							guitarType: {
+								DataType: 'String',
+								StringValue: guitarType,
+							},
+						},
 					})
 					.promise();
 

@@ -21,17 +21,17 @@ let mockedSQSDelete;
 describe('catalogBatchProcess function', () => {
 	beforeAll(() => {
 		addProductToDB.mockImplementation((data) => data);
-    mockedSNSPublish = jest.fn();
-    mockedSQSDelete = jest.fn();
+		mockedSNSPublish = jest.fn();
+		mockedSQSDelete = jest.fn();
 		AWS.mock('SNS', 'publish', (params, callback) => {
-      mockedSNSPublish();
-      callback(null, 'test');
-    });
-  });
+			mockedSNSPublish();
+			callback(null, 'test');
+		});
+	});
 
 	afterAll(() => {
 		AWS.restore('S3');
-  });
+	});
 
 	describe('when some records recieved', () => {
 		describe('and all recieved records collect valid product data', () => {
@@ -41,23 +41,23 @@ describe('catalogBatchProcess function', () => {
 			}));
 			const mockedEvent = {
 				Records: mockedRecords,
-      };
+			};
 
 			beforeAll(async (done) => {
 				await catalogBatchProcess(mockedEvent);
 				done();
-      });
+			});
 
 			it('should add all products to DB', () => {
 				expect(addProductToDB).toHaveBeenCalledWith(validProducts[0]);
 				expect(addProductToDB).toHaveBeenCalledWith(validProducts[1]);
 				expect(addProductToDB).toHaveBeenCalledTimes(2);
-      });
+			});
 
 			it('should publish SNS message for each product', () => {
 				expect(mockedSNSPublish).toHaveBeenCalledTimes(2);
 			});
-    });
+		});
 
 		describe('and some recieved records collect invalid product data', () => {
 			const mockedRecords = validAndInvalidProducts.map((el) => ({
@@ -66,23 +66,23 @@ describe('catalogBatchProcess function', () => {
 			}));
 			const mockedEvent = {
 				Records: mockedRecords,
-      };
+			};
 
 			beforeAll(async (done) => {
 				addProductToDB.mockClear();
 				mockedSNSPublish.mockClear();
 				await catalogBatchProcess(mockedEvent);
 				done();
-      });
+			});
 
 			it('should add only valid products to DB', () => {
 				expect(addProductToDB).toHaveBeenCalledWith(validAndInvalidProducts[1]);
 				expect(addProductToDB).toHaveBeenCalledTimes(1);
-      });
+			});
 
 			it('should publish SNS message for each valid product', () => {
 				expect(mockedSNSPublish).toHaveBeenCalledTimes(1);
-      });
+			});
 		});
 	});
 });
