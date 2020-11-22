@@ -51,6 +51,19 @@ resources:
         Protocol: email
         TopicArn:
           Ref: SNSTopic
+        FilterPolicy:
+          guitarType:
+            - ${file(./config/sns-filter.config.json):filter.values.nonelectric}
+    SNSSubscription2:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: shagon2k@gmail.com
+        Protocol: email
+        TopicArn:
+          Ref: SNSTopic
+        FilterPolicy:
+          guitarType:
+            - ${file(./config/sns-filter.config.json):filter.values.electric}
 
 functions:
   getProductsList:
