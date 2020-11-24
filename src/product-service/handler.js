@@ -1,7 +1,8 @@
-import { getProductsList, getProduct, addProduct } from '@handlers';
+import { getProductsList, getProduct, addProduct, catalogBatchProcess } from '@handlers';
 
 export {
   getProduct,
   getProductsList,
-  addProduct
+  addProduct,
+  catalogBatchProcess
 };

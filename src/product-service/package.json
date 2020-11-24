@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "AHurynovich AWS Course Product Service",
   "scripts": {
-    "deploy": "serverless deploy",
+    "deploy": "serverless deploy --stage prod",
     "deploy:dev": "serverless deploy --stage dev",
     "deploy:prod": "serverless deploy --stage prod",
     "test": "jest --config config/jest/jest.config.js --notify"
@@ -13,6 +13,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
     "@babel/preset-env": "^7.11.0",
     "@babel/register": "^7.12.1",
+    "aws-sdk-mock": "^5.1.0",
     "babel-loader": "^8.1.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
@@ -29,6 +30,7 @@
   "license": "MIT",
   "dependencies": {
     "@babel/cli": "^7.12.1",
+    "aws-sdk": "^2.794.0",
     "axios": "^0.21.0",
     "fs-extra": "^9.0.1",
     "pg": "^8.4.2"

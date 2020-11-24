@@ -1,6 +1,7 @@
 import { getProductDBData } from '@database-controllers';
 import { ERROR_MESSAGES } from '@src/constants';
 import { NotFoundError } from '@lib/errors';
+import logger from '@lib/logger';
 
 import { prepareErrorResponse, convertPrice, getAccessOriginHeader } from '../helpers';
 
@@ -8,7 +9,7 @@ export const responseMsg = 'Product Info';
 
 async function getProduct(event) {
   try {
-    console.log('Get product lambda triggered with params: ', event.pathParameters);
+    logger.log('Get product lambda triggered with params: ', event.pathParameters);
 
     const requestOrigin = event?.headers?.origin || '';
     const { productId } = event.pathParameters;
@@ -40,7 +41,7 @@ async function getProduct(event) {
 
     return response;
   } catch (error) {
-    console.log('Get product request error', error);
+    logger.log('Get product request error', error);
 
     const statusCode = error.code || 500;
     const errorResponse = prepareErrorResponse(error, statusCode);

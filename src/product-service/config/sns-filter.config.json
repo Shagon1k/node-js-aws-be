@@ -1,0 +1,9 @@
+{
+  "filter": {
+    "type": "Guitar Type",
+    "values": {
+      "electric": "electric-type",
+      "nonelectric": "non-electric-type"
+    }
+  }
+}

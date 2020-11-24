@@ -9,7 +9,7 @@ provider:
   name: aws
   runtime: nodejs12.x
   region: eu-west-1
-  stage: prod
+  stage: ${self:custom.stage}
   iamRoleStatements:
     - Effect: "Allow"
       Action: "s3:ListBucket"
@@ -20,6 +20,27 @@ provider:
         - "s3:*"
       Resource:
         - "arn:aws:s3:::rs-school-app-shagon1k-uploaded/*"
+    - Effect: "Allow"
+      Action: "sqs:*"
+      Resource:
+        Fn::GetAtt: [SQSQueue, Arn]
+  environment:
+    SQS_URL:
+      Ref: SQSQueue
+
+resources:
+  Resources:
+    SQSQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: catalogItemsQueue
+  Outputs:
+    SQSQueueArn:
+      Value:
+        Fn::GetAtt: [SQSQueue, Arn]
+    SQSQueue:
+      Value:
+        Ref: SQSQueue
 
 # Add the serverless-webpack plugin
 plugins:
@@ -31,6 +52,7 @@ custom:
     packager: "npm"   # Packager that will be used to package your external modules
     excludeFiles: src/**/*.test.js # Provide a glob for files to ignore
     keepOutputDirectory: true
+  stage: ${opt:stage,dev}
 
 functions:
   importProductsFile:

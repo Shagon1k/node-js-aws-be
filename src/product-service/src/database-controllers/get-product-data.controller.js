@@ -1,5 +1,6 @@
 import { ERROR_MESSAGES } from '@src/constants';
 import { DataBaseError } from '@lib/errors';
+import logger from '@lib/logger';
 
 import { createDBConnection } from './helpers';
 
@@ -16,7 +17,7 @@ const getProductDBData = async (productId) => {
 
 		return productData;
 	} catch (error) {
-    console.log(error);
+    logger.log(error);
 
     throw new DataBaseError(ERROR_MESSAGES.DB_HANDLING_ERROR);
 	} finally {
