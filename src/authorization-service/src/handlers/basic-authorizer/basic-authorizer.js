@@ -1,5 +1,5 @@
 import logger from '@lib/logger';
-import { UNAUTHORIZED_STATUS_MESSAGE, BASIC_AUTHORIZATION_TYPE, ALLOW_EFFECT, DENY_EFFECT } from '@src/constants';
+import { BASIC_AUTHORIZATION_TYPE, ALLOW_EFFECT, DENY_EFFECT } from '@src/constants';
 
 const checkIfBasicAuthorizationType = (parsedAuthorizationType) => parsedAuthorizationType === BASIC_AUTHORIZATION_TYPE;
 
@@ -11,6 +11,8 @@ const checkPassedCredentialsValid = (username, password) => {
 
 	return correctPassword && correctPassword === password;
 };
+
+const checkCredentialsPatternIsValid = creds => /(.+):(.+)/.test(creds);
 
 // NOTE: Check how this one created and it's fields
 const generatePolicy = (principalId, resource, authorizerEffect = DENY_EFFECT) => ({
@@ -47,7 +49,10 @@ async function basicAuthorizer(event, context, callback) {
 		}
 
     const decodedCredentials = Buffer.from(passedToken, 'base64').toString('utf-8');
-    // ? Check correct passing format "Username:Password"?
+    const isCredentialsPatternValid = checkCredentialsPatternIsValid(decodedCredentials);
+    if (!isCredentialsPatternValid) {
+      throw new Error('Incorrect decoded credentials pattern. Required is username:password');
+    }
 		const [username, password] = decodedCredentials.split(':');
 
 		logger.log(`Passed credentials. Username: ${username}. Last 3 password letters: ${password.slice(-3)}`);
@@ -58,8 +63,8 @@ async function basicAuthorizer(event, context, callback) {
 
 		callback(null, policy);
 	} catch (error) {
-		logger.log('Authorization error occured.', error);
-		callback(`${UNAUTHORIZED_STATUS_MESSAGE}. ${error}`);
+		logger.error('Authorization error occured.', error);
+		callback(`Unauthorized: ${error.message}`);
 	}
 }
 
