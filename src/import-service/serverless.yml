@@ -118,7 +118,7 @@ functions:
                 name: true
           authorizer:
             name: basicAuthorizer
-            arn: "${cf:authorization-service-${self:custom.stage}.BasicAuthorizerLambdaFunctionQualifiedArn}"
+            arn: ${cf:authorization-service-${self:custom.stage}.BasicAuthorizerLambdaFunctionArn}
             identitySource: method.request.header.Authorization
             type: token
   importFileParser:

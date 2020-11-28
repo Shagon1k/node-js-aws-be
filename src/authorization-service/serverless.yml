@@ -15,6 +15,7 @@ provider:
 plugins:
   - serverless-webpack
   - serverless-dotenv-plugin
+  - serverless-function-outputs
 
 custom:
   webpack:
