@@ -5,14 +5,17 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "deploy:all:prod": "npm run deploy:product-service:prod && deploy:import-service:prod",
-    "deploy:all:dev": "npm run deploy:product-service:dev && deploy:import-service:dev",
+    "deploy:all:prod": "npm run deploy:product-service:prod && deploy:import-service:prod && deploy:authorization-service:prod",
+    "deploy:all:dev": "npm run deploy:product-service:dev && deploy:import-service:dev && deploy:authorization-service:dev",
     "deploy:product-service:prod": "cd src/product-service && npm run deploy:prod",
     "deploy:product-service:dev": "cd src/product-service && npm run deploy:dev",
     "deploy:import-service:prod": "cd src/import-service && npm run deploy:prod",
     "deploy:import-service:dev": "cd src/import-service && npm run deploy:dev",
-    "test:all": "npm run test:product-service && test:import-service",
+    "deploy:authorization-service:prod": "cd src/authorization-service && npm run deploy:prod",
+    "deploy:authorization-service:dev": "cd src/authorization-service && npm run deploy:dev",
+    "test:all": "npm run test:product-service && test:import-service && test:authorization-service",
     "test:product-service": "cd src/product-service && npm run test",
-    "test:import-service": "cd src/import-service && npm run test"
+    "test:import-service": "cd src/import-service && npm run test",
+    "test:authorization-service": "cd src/authorization-service && npm run test"
   }
 }
