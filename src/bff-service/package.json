@@ -22,7 +22,10 @@
   "scripts": {
     "build": "webpack --config config/webpack/webpack.config.babel.js",
     "start": "node dist/index.js",
-    "start:debug": "nodemon -- --inspect dist/index.js"
+    "start:debug": "nodemon -- --inspect dist/index.js",
+    "eb-init": "eb init --platform node.js --region eu-west-1 --interactive",
+    "eb-create": "eb create development --single --cname shagon1k-bff-api-development",
+    "eb-terminate": "eb terminate"
   },
   "repository": {
     "type": "git",
