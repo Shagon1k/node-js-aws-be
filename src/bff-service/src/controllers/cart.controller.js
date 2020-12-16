@@ -16,7 +16,7 @@ const getCartController = () => async (req, res, next) => {
       method,
       body: data = null
     } = req;
-    const additionalRequestParams = Object.keys(data) > 0 ? { data } : {};
+    const additionalRequestParams = Object.keys(data).length > 0 ? { data } : {};
     const subUrl = originalUrl.replace('/cart', '');
 
     const allowedHeaders = filterAllowedHeaders(headers);

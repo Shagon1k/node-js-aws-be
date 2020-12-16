@@ -5,7 +5,7 @@ import MemoryCache from '../lib/cache';
 const productsCache = new MemoryCache(120000);
 const CACHING_SUBURLS_REGEX = [/\/products$/];
 
-const checkIfShouldBeCached = subUrl => CACHING_SUBURLS_REGEX.some(subUrlRegex => subUrlRegex.test(subUrl));
+const checkIfShouldBeCached = (method, subUrl) => method.toLowerCase() === 'get' && CACHING_SUBURLS_REGEX.some(subUrlRegex => subUrlRegex.test(subUrl));
 
 const getProductController = () => async (req, res, next) => {
   try {
@@ -21,7 +21,7 @@ const getProductController = () => async (req, res, next) => {
       method,
       body: data = null
     } = req;
-    const additionalRequestParams = Object.keys(data) > 0 ? { data } : {};
+    const additionalRequestParams = Object.keys(data).length > 0 ? { data } : {};
     const subUrl = originalUrl.replace('/product', '');
 
     const axiosConfig = {
@@ -31,7 +31,7 @@ const getProductController = () => async (req, res, next) => {
       ...additionalRequestParams,
     };
 
-    if (checkIfShouldBeCached(subUrl)) {
+    if (checkIfShouldBeCached(method, subUrl)) {
       const cachedValue = productsCache.getValue(subUrl);
 
       if (cachedValue) {
